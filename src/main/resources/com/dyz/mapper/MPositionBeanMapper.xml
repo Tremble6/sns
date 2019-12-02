@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.MPositionBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.dyz.entity.MPositionBean" >
+    <id column="position_id" property="positionId" jdbcType="VARCHAR" />
+    <result column="position_nm" property="positionNm" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_by" property="deletedBy" jdbcType="VARCHAR" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+    <result column="exclusion_version" property="exclusionVersion" jdbcType="INTEGER" />
+    <result column="del_flg" property="delFlg" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    position_id, position_nm, created_by, created_at, updated_by, updated_at, deleted_by, 
+    deleted_at, exclusion_version, del_flg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from m_position
+    where position_id = #{positionId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from m_position
+    where position_id = #{positionId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dyz.entity.MPositionBean" >
+    insert into m_position (position_id, position_nm, created_by, 
+      created_at, updated_by, updated_at, 
+      deleted_by, deleted_at, exclusion_version, 
+      del_flg)
+    values (#{positionId,jdbcType=VARCHAR}, #{positionNm,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{deletedBy,jdbcType=VARCHAR}, #{deletedAt,jdbcType=TIMESTAMP}, #{exclusionVersion,jdbcType=INTEGER}, 
+      #{delFlg,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dyz.entity.MPositionBean" >
+    insert into m_position
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="positionId != null" >
+        position_id,
+      </if>
+      <if test="positionNm != null" >
+        position_nm,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedBy != null" >
+        updated_by,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="deletedBy != null" >
+        deleted_by,
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at,
+      </if>
+      <if test="exclusionVersion != null" >
+        exclusion_version,
+      </if>
+      <if test="delFlg != null" >
+        del_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="positionId != null" >
+        #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="positionNm != null" >
+        #{positionNm,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedBy != null" >
+        #{deletedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null" >
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exclusionVersion != null" >
+        #{exclusionVersion,jdbcType=INTEGER},
+      </if>
+      <if test="delFlg != null" >
+        #{delFlg,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dyz.entity.MPositionBean" >
+    update m_position
+    <set >
+      <if test="positionNm != null" >
+        position_nm = #{positionNm,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedBy != null" >
+        deleted_by = #{deletedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exclusionVersion != null" >
+        exclusion_version = #{exclusionVersion,jdbcType=INTEGER},
+      </if>
+      <if test="delFlg != null" >
+        del_flg = #{delFlg,jdbcType=BIT},
+      </if>
+    </set>
+    where position_id = #{positionId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dyz.entity.MPositionBean" >
+    update m_position
+    set position_nm = #{positionNm,jdbcType=VARCHAR},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_by = #{deletedBy,jdbcType=VARCHAR},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      exclusion_version = #{exclusionVersion,jdbcType=INTEGER},
+      del_flg = #{delFlg,jdbcType=BIT}
+    where position_id = #{positionId,jdbcType=VARCHAR}
+  </update>
+</mapper>

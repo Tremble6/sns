@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.VMessageBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.dyz.entity.VMessageBean" >
+    <result column="room_name" property="roomName" jdbcType="VARCHAR" />
+    <result column="room_type" property="roomType" jdbcType="CHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+    <result column="sended_at" property="sendedAt" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="CHAR" />
+    <result column="pk" property="pk" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="personnel_id" property="personnelId" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="section_id" property="sectionId" jdbcType="VARCHAR" />
+    <result column="position_id" property="positionId" jdbcType="VARCHAR" />
+    <result column="family_name_kanji" property="familyNameKanji" jdbcType="VARCHAR" />
+    <result column="personal_name_kanji" property="personalNameKanji" jdbcType="VARCHAR" />
+    <result column="attention_flg" property="attentionFlg" jdbcType="BIT" />
+    <result column="ng_state" property="ngState" jdbcType="CHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.dyz.entity.VMessageBean" >
+    insert into v_message (room_name, room_type, message, 
+      file_name, file_url, sended_at, 
+      state, pk, email, personnel_id, 
+      company_id, section_id, position_id, 
+      family_name_kanji, personal_name_kanji, attention_flg, 
+      ng_state)
+    values (#{roomName,jdbcType=VARCHAR}, #{roomType,jdbcType=CHAR}, #{message,jdbcType=VARCHAR}, 
+      #{fileName,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{sendedAt,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=CHAR}, #{pk,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{personnelId,jdbcType=VARCHAR}, 
+      #{companyId,jdbcType=VARCHAR}, #{sectionId,jdbcType=VARCHAR}, #{positionId,jdbcType=VARCHAR}, 
+      #{familyNameKanji,jdbcType=VARCHAR}, #{personalNameKanji,jdbcType=VARCHAR}, #{attentionFlg,jdbcType=BIT}, 
+      #{ngState,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dyz.entity.VMessageBean" >
+    insert into v_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roomName != null" >
+        room_name,
+      </if>
+      <if test="roomType != null" >
+        room_type,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="fileName != null" >
+        file_name,
+      </if>
+      <if test="fileUrl != null" >
+        file_url,
+      </if>
+      <if test="sendedAt != null" >
+        sended_at,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="pk != null" >
+        pk,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="personnelId != null" >
+        personnel_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="sectionId != null" >
+        section_id,
+      </if>
+      <if test="positionId != null" >
+        position_id,
+      </if>
+      <if test="familyNameKanji != null" >
+        family_name_kanji,
+      </if>
+      <if test="personalNameKanji != null" >
+        personal_name_kanji,
+      </if>
+      <if test="attentionFlg != null" >
+        attention_flg,
+      </if>
+      <if test="ngState != null" >
+        ng_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roomName != null" >
+        #{roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomType != null" >
+        #{roomType,jdbcType=CHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sendedAt != null" >
+        #{sendedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="pk != null" >
+        #{pk,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="personnelId != null" >
+        #{personnelId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionId != null" >
+        #{sectionId,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="familyNameKanji != null" >
+        #{familyNameKanji,jdbcType=VARCHAR},
+      </if>
+      <if test="personalNameKanji != null" >
+        #{personalNameKanji,jdbcType=VARCHAR},
+      </if>
+      <if test="attentionFlg != null" >
+        #{attentionFlg,jdbcType=BIT},
+      </if>
+      <if test="ngState != null" >
+        #{ngState,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

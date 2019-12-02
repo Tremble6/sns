@@ -1,0 +1,29 @@
+spring:
+  mvc:
+    view:
+     prefix: /WEB-INF/jsp/
+     suffix: .jsp
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 123456
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=dir&useUnicode=true&characterEncoding=utf8
+  jpa:
+    show-sql: true
+    #全局配置   返回前端值为 null的属性不会返回
+  jackson:
+    default-property-inclusion: non_null
+
+
+server:
+  port: 8080
+  servlet:
+    context-path: /sns
+
+mybatis:
+  mapper-locations: classpath:com/dyz/mapper/*.xml
+  type-aliases-package: com.dyz.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+

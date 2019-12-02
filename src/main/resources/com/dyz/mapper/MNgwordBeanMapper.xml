@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.MNgwordBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.dyz.entity.MNgwordBean" >
+    <id column="pk" property="pk" jdbcType="INTEGER" />
+    <result column="ng_word" property="ngWord" jdbcType="VARCHAR" />
+    <result column="ng_type" property="ngType" jdbcType="CHAR" />
+    <result column="section_id" property="sectionId" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_by" property="deletedBy" jdbcType="VARCHAR" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+    <result column="exclusion_version" property="exclusionVersion" jdbcType="INTEGER" />
+    <result column="del_flg" property="delFlg" jdbcType="BIT" />
+    <result column="count" property="count"></result>
+    <collection property="mSectionBean" ofType="com.dyz.entity.MSectionBean">
+      <id column="section_id" property="sectionId" jdbcType="VARCHAR" />
+      <result column="section_nm" property="sectionNm" jdbcType="VARCHAR" />
+    </collection>
+    <collection property="mCompanyBean" ofType="com.dyz.entity.MCompanyBean">
+      <id column="company_id" property="companyId" jdbcType="VARCHAR" />
+      <result column="company_nm" property="companyNm" jdbcType="VARCHAR" />
+    </collection>
+
+    <collection property="tUserBean" ofType="com.dyz.entity.TUserBean">
+      <result column="account" property="account" jdbcType="VARCHAR" />
+      <result column="email" property="email" jdbcType="VARCHAR" />
+    </collection>
+
+    <collection property="tmemberBean" ofType="com.dyz.entity.TmemberBean">
+      <result column="email" property="email" jdbcType="VARCHAR" />
+      <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+      <result column="section_id" property="sectionId" jdbcType="VARCHAR" />
+    </collection>
+
+    <collection property="tmessageBean" ofType="com.dyz.entity.TmessageBean">
+      <id column="pk" property="pk" jdbcType="INTEGER" />
+      <result column="message" property="message" jdbcType="VARCHAR" />
+      <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+      <result column="sended_at" property="sendedAt" jdbcType="TIMESTAMP" />
+    </collection>
+
+    <collection property="tNgmessageBean" ofType="com.dyz.entity.TNgmessageBean">
+      <result column="message_pk" property="messagePk" jdbcType="INTEGER" />
+      <result column="ng_pk" property="ngPk" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+ <!--添加ngWord 部门-->
+  <insert id="insertByNg">
+    INSERT INTO m_ngword (ng_word,ng_type,section_id,created_by) VALUES (#{ngWord},#{ngType},#{sectionId},#{createdBy});
+  </insert>
+  <!--添加ngWord 全社-->
+  <insert id="insertByNgController">
+    INSERT INTO m_ngword (ng_word,ng_type,created_by) VALUES (#{ngWord},#{ngType},#{createdBy});
+  </insert>
+  <!--判断ngWord是否存在-->
+  <select id="insertByNgPresence" resultMap="BaseResultMap">
+    SELECT * FROM m_ngword
+	WHERE (m_ngword.ng_word = #{ngWord}
+	AND m_ngword.ng_type= '2'
+	AND m_ngword.section_id = #{sectionId}
+	AND m_ngword.del_flg = FALSE)
+    OR (m_ngword.ng_word = #{ngWord}
+    AND m_ngword.ng_type= '1'
+	AND m_ngword.del_flg = FALSE)
+  </select>
+  <!--ngWord数量-->
+  <select id="selectNgWordCount" resultMap="BaseResultMap">
+    SELECT count(m_ngword.pk)as count FROM m_ngword,v_section_of_company
+    WHERE v_section_of_company.section_id = m_ngword.section_id
+    AND v_section_of_company.section_nm = #{sectionNm}
+    AND v_section_of_company.company_nm = #{companyNm}
+    AND m_ngword.ng_type = #{ngType}
+  </select>
+  <!--插入带有ngWord的消息 部门-->
+  <insert id="insertByNgPresences">
+     INSERT INTO t_ngmessage (message_pk,message_bak,ng_pk)
+	SELECT t_message.pk,m_ngword.ng_word,m_ngword.pk FROM v_message,v_section_of_company,t_message,m_ngword
+    WHERE v_message.section_id = v_section_of_company.section_id
+    AND v_message.company_id = v_section_of_company.company_id
+    AND v_section_of_company.section_nm = #{sectionNm}
+    AND v_section_of_company.company_nm = #{companyNm}
+    AND t_message.message = v_message.message
+    AND v_message.message LIKE concat('%', m_ngword.ng_word,'%')
+    AND m_ngword.ng_word = #{ngWord}
+  </insert>
+  <!--插入带有ngWord的消息 全社-->
+  <insert id="insertByNgPresencesAll">
+    INSERT INTO t_ngmessage (message_pk,message_bak,ng_pk)
+	  SELECT t_message.pk,m_ngword.ng_word,m_ngword.pk FROM t_message,m_ngword
+	  WHERE t_message.message LIKE concat('%', m_ngword.ng_word,'%')
+	  AND m_ngword.ng_word = #{ngWord}
+	  AND m_ngword.ng_type = #{ngType}
+  </insert>
+  <!--修改ngWord-->
+  <update id="updateByNg">
+     UPDATE m_ngword SET ng_word = #{ngWord},updated_at =#{updatedAt},updated_by=#{updatedBy} WHERE pk = #{pk};
+  </update>
+  <select id="selectByNgAll" resultMap="BaseResultMap">
+    SELECT m_ngword.ng_type,m_ngword.ng_word,m_ngword.pk,m_ngword.section_id,m_section.section_nm,m_company.company_nm
+    FROM m_ngword,m_section,m_company
+    WHERE m_section.section_id = m_ngword.section_id and m_ngword.section_id = #{sectionId} AND m_company.company_id=#{companyId}
+    and m_ngword.del_flg=false;
+
+  </select>
+  <!--NgWord显示 部门-->
+  <select id="selectByNgAllS" resultMap="BaseResultMap">
+   SELECT m_ngword.pk,m_ngword.ng_word,m_ngword.ng_type,v_section_of_company.section_nm,v_section_of_company.company_nm,COUNT(t_ngmessage.message_bak)
+	 FROM m_ngword,t_ngmessage,t_message,v_section_of_company,t_member,m_sns_user
+     WHERE m_ngword.ng_type= #{ngType}
+     AND t_ngmessage.ng_pk = m_ngword.pk
+	 AND m_ngword.section_id = v_section_of_company.section_id
+	 AND t_message.pk = t_ngmessage.message_pk
+	 AND m_sns_user.account_id = t_message.chatwork_id
+	 AND t_member.email = m_sns_user.account_mail
+	 AND t_member.section_id = v_section_of_company.section_id
+	 AND t_member.company_id = v_section_of_company.company_id
+     AND  v_section_of_company.company_nm = #{companyNm}
+     AND v_section_of_company.section_nm = #{sectionNm}
+	GROUP BY m_ngword.pk,m_ngword.ng_word,m_ngword.ng_type,v_section_of_company.section_nm,v_section_of_company.company_nm
+  </select>
+  <!--NgWord显示 全社-->
+  <select id="selectByNgAllSs" resultMap="BaseResultMap">
+     SELECT m_ngword.pk,m_ngword.ng_word,m_ngword.ng_type,COUNT(t_ngmessage.message_bak) FROM m_ngword,t_ngmessage,t_message
+	 WHERE m_ngword.ng_type = #{ngType}
+	 AND t_ngmessage.ng_pk = m_ngword.pk
+	 AND t_message.pk = t_ngmessage.message_pk
+	 GROUP BY m_ngword.pk,m_ngword.ng_word,m_ngword.ng_type
+  </select>
+
+</mapper>

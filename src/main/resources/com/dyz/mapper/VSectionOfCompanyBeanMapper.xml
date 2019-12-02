@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.VSectionOfCompanyBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.dyz.entity.VSectionOfCompanyBean" >
+    <result column="section_id" property="sectionId" jdbcType="VARCHAR" />
+    <result column="section_nm" property="sectionNm" jdbcType="VARCHAR" />
+    <result column="display_order" property="displayOrder" jdbcType="INTEGER" />
+    <result column="orgnznameabbr" property="orgnznameabbr" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="company_nm" property="companyNm" jdbcType="VARCHAR" />
+    <result column="company_abb" property="companyAbb" jdbcType="VARCHAR" />
+    <result column="names" property="names" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.dyz.entity.VSectionOfCompanyBean" >
+    insert into v_section_of_company (section_id, section_nm, display_order, 
+      orgnznameabbr, company_id, company_nm, 
+      company_abb)
+    values (#{sectionId,jdbcType=VARCHAR}, #{sectionNm,jdbcType=VARCHAR}, #{displayOrder,jdbcType=INTEGER}, 
+      #{orgnznameabbr,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{companyNm,jdbcType=VARCHAR}, 
+      #{companyAbb,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dyz.entity.VSectionOfCompanyBean" >
+    insert into v_section_of_company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sectionId != null" >
+        section_id,
+      </if>
+      <if test="sectionNm != null" >
+        section_nm,
+      </if>
+      <if test="displayOrder != null" >
+        display_order,
+      </if>
+      <if test="orgnznameabbr != null" >
+        orgnznameabbr,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="companyNm != null" >
+        company_nm,
+      </if>
+      <if test="companyAbb != null" >
+        company_abb,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sectionId != null" >
+        #{sectionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionNm != null" >
+        #{sectionNm,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        #{displayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="orgnznameabbr != null" >
+        #{orgnznameabbr,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNm != null" >
+        #{companyNm,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAbb != null" >
+        #{companyAbb,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectSectionNm" resultMap="BaseResultMap">
+    SELECT v_section_of_company.section_id FROM v_section_of_company
+    WHERE v_section_of_company.section_nm = #{sectionNm}
+    AND v_section_of_company.company_nm = #{companyNm}
+  </select>
+</mapper>

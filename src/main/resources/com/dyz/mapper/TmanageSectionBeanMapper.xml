@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.TmanageSectionBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.dyz.entity.TmanageSectionBean" >
+    <id column="pk" property="pk" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="manage_section_id" property="manageSectionId" jdbcType="VARCHAR" />
+    <result column="final_monitor_at" property="finalMonitorAt" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_by" property="deletedBy" jdbcType="VARCHAR" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+    <result column="exclusion_version" property="exclusionVersion" jdbcType="INTEGER" />
+    <result column="del_flg" property="delFlg" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk, account, manage_section_id, final_monitor_at, created_by, created_at, updated_by, 
+    updated_at, deleted_by, deleted_at, exclusion_version, del_flg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_manage_section
+    where pk = #{pk,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_manage_section
+    where pk = #{pk,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dyz.entity.TmanageSectionBean" >
+    insert into t_manage_section (pk, account, manage_section_id, 
+      final_monitor_at, created_by, created_at, 
+      updated_by, updated_at, deleted_by, 
+      deleted_at, exclusion_version, del_flg
+      )
+    values (#{pk,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{manageSectionId,jdbcType=VARCHAR}, 
+      #{finalMonitorAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedBy,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, #{deletedBy,jdbcType=VARCHAR}, 
+      #{deletedAt,jdbcType=TIMESTAMP}, #{exclusionVersion,jdbcType=INTEGER}, #{delFlg,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dyz.entity.TmanageSectionBean" >
+    insert into t_manage_section
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pk != null" >
+        pk,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="manageSectionId != null" >
+        manage_section_id,
+      </if>
+      <if test="finalMonitorAt != null" >
+        final_monitor_at,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedBy != null" >
+        updated_by,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="deletedBy != null" >
+        deleted_by,
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at,
+      </if>
+      <if test="exclusionVersion != null" >
+        exclusion_version,
+      </if>
+      <if test="delFlg != null" >
+        del_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pk != null" >
+        #{pk,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="manageSectionId != null" >
+        #{manageSectionId,jdbcType=VARCHAR},
+      </if>
+      <if test="finalMonitorAt != null" >
+        #{finalMonitorAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedBy != null" >
+        #{deletedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null" >
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exclusionVersion != null" >
+        #{exclusionVersion,jdbcType=INTEGER},
+      </if>
+      <if test="delFlg != null" >
+        #{delFlg,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dyz.entity.TmanageSectionBean" >
+    update t_manage_section
+    <set >
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="manageSectionId != null" >
+        manage_section_id = #{manageSectionId,jdbcType=VARCHAR},
+      </if>
+      <if test="finalMonitorAt != null" >
+        final_monitor_at = #{finalMonitorAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedBy != null" >
+        deleted_by = #{deletedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exclusionVersion != null" >
+        exclusion_version = #{exclusionVersion,jdbcType=INTEGER},
+      </if>
+      <if test="delFlg != null" >
+        del_flg = #{delFlg,jdbcType=BIT},
+      </if>
+    </set>
+    where pk = #{pk,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dyz.entity.TmanageSectionBean" >
+    update t_manage_section
+    set account = #{account,jdbcType=VARCHAR},
+      manage_section_id = #{manageSectionId,jdbcType=VARCHAR},
+      final_monitor_at = #{finalMonitorAt,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_by = #{deletedBy,jdbcType=VARCHAR},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      exclusion_version = #{exclusionVersion,jdbcType=INTEGER},
+      del_flg = #{delFlg,jdbcType=BIT}
+    where pk = #{pk,jdbcType=INTEGER}
+  </update>
+</mapper>

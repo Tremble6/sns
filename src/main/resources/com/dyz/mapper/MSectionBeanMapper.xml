@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.MSectionBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.dyz.entity.MSectionBean" >
+    <id column="section_id" property="sectionId" jdbcType="VARCHAR" />
+    <result column="section_nm" property="sectionNm" jdbcType="VARCHAR" />
+    <result column="orgnznameabbr" property="orgnznameabbr" jdbcType="VARCHAR" />
+    <result column="display_order" property="displayOrder" jdbcType="INTEGER" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_by" property="deletedBy" jdbcType="VARCHAR" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+    <result column="exclusion_version" property="exclusionVersion" jdbcType="INTEGER" />
+    <result column="del_flg" property="delFlg" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    section_id, section_nm, orgnznameabbr, display_order, created_by, created_at, updated_by, 
+    updated_at, deleted_by, deleted_at, exclusion_version, del_flg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from m_section
+    where section_id = #{sectionId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from m_section
+    where section_id = #{sectionId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dyz.entity.MSectionBean" >
+    insert into m_section (section_id, section_nm, orgnznameabbr, 
+      display_order, created_by, created_at, 
+      updated_by, updated_at, deleted_by, 
+      deleted_at, exclusion_version, del_flg
+      )
+    values (#{sectionId,jdbcType=VARCHAR}, #{sectionNm,jdbcType=VARCHAR}, #{orgnznameabbr,jdbcType=VARCHAR}, 
+      #{displayOrder,jdbcType=INTEGER}, #{createdBy,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedBy,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, #{deletedBy,jdbcType=VARCHAR}, 
+      #{deletedAt,jdbcType=TIMESTAMP}, #{exclusionVersion,jdbcType=INTEGER}, #{delFlg,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dyz.entity.MSectionBean" >
+    insert into m_section
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sectionId != null" >
+        section_id,
+      </if>
+      <if test="sectionNm != null" >
+        section_nm,
+      </if>
+      <if test="orgnznameabbr != null" >
+        orgnznameabbr,
+      </if>
+      <if test="displayOrder != null" >
+        display_order,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedBy != null" >
+        updated_by,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="deletedBy != null" >
+        deleted_by,
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at,
+      </if>
+      <if test="exclusionVersion != null" >
+        exclusion_version,
+      </if>
+      <if test="delFlg != null" >
+        del_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sectionId != null" >
+        #{sectionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionNm != null" >
+        #{sectionNm,jdbcType=VARCHAR},
+      </if>
+      <if test="orgnznameabbr != null" >
+        #{orgnznameabbr,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        #{displayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedBy != null" >
+        #{deletedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null" >
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exclusionVersion != null" >
+        #{exclusionVersion,jdbcType=INTEGER},
+      </if>
+      <if test="delFlg != null" >
+        #{delFlg,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dyz.entity.MSectionBean" >
+    update m_section
+    <set >
+      <if test="sectionNm != null" >
+        section_nm = #{sectionNm,jdbcType=VARCHAR},
+      </if>
+      <if test="orgnznameabbr != null" >
+        orgnznameabbr = #{orgnznameabbr,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        display_order = #{displayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedBy != null" >
+        deleted_by = #{deletedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exclusionVersion != null" >
+        exclusion_version = #{exclusionVersion,jdbcType=INTEGER},
+      </if>
+      <if test="delFlg != null" >
+        del_flg = #{delFlg,jdbcType=BIT},
+      </if>
+    </set>
+    where section_id = #{sectionId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dyz.entity.MSectionBean" >
+    update m_section
+    set section_nm = #{sectionNm,jdbcType=VARCHAR},
+      orgnznameabbr = #{orgnznameabbr,jdbcType=VARCHAR},
+      display_order = #{displayOrder,jdbcType=INTEGER},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_by = #{deletedBy,jdbcType=VARCHAR},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      exclusion_version = #{exclusionVersion,jdbcType=INTEGER},
+      del_flg = #{delFlg,jdbcType=BIT}
+    where section_id = #{sectionId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectSectionNm" resultMap="BaseResultMap">
+    select * from m_section where section_nm = #{sectionNm};
+  </select>
+</mapper>

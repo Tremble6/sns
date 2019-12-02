@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.TmessageBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.dyz.entity.TmessageBean" >
+    <id column="pk" property="pk" jdbcType="INTEGER" />
+    <result column="chatwork_id" property="chatworkId" jdbcType="CHAR" />
+    <result column="room_id" property="roomId" jdbcType="CHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+    <result column="sended_at" property="sendedAt" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="CHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_by" property="deletedBy" jdbcType="VARCHAR" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+    <result column="exclusion_version" property="exclusionVersion" jdbcType="INTEGER" />
+    <result column="del_flg" property="delFlg" jdbcType="BIT" />
+
+    <collection property="tmemberBean" ofType="com.dyz.entity.TmemberBean">
+      <result column="email" property="email" jdbcType="VARCHAR" />
+      <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+      <result column="section_id" property="sectionId" jdbcType="VARCHAR" />
+      <result column="family_name_kanji" property="familyNameKanji" jdbcType="VARCHAR" />
+      <result column="personal_name_kanji" property="personalNameKanji" jdbcType="VARCHAR" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+    </collection>
+
+    <collection property="tUserBean" ofType="com.dyz.entity.TUserBean">
+      <result column="account" property="account" jdbcType="VARCHAR" />
+      <result column="email" property="email" jdbcType="VARCHAR" />
+    </collection>
+
+      <collection property="vSectionOfCompanyBean" ofType="com.dyz.entity.VSectionOfCompanyBean">
+        <result column="section_id" property="sectionId" jdbcType="VARCHAR" />
+        <result column="section_nm" property="sectionNm" jdbcType="VARCHAR" />
+        <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+        <result column="company_nm" property="companyNm" jdbcType="VARCHAR" />
+        <result column="names" property="names" jdbcType="VARCHAR" />
+       </collection>
+
+    <collection property="tNgmessageBean" ofType="com.dyz.entity.TNgmessageBean">
+      <result column="message_pk" property="messagePk" jdbcType="INTEGER" />
+      <result column="ng_pk" property="ngPk" jdbcType="INTEGER" />
+    </collection>
+
+    <collection property="mSnsUserBean" ofType="com.dyz.entity.MSnsUserBean">
+      <result column="account_id" property="accountId" jdbcType="CHAR" />
+      <result column="account_mail" property="accountMail" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+
+  <!--ng检索 部门-->
+  <select id="retrievalNgWord" resultMap="BaseResultMap">
+    SELECT t_message.pk,concat(t_member.family_name_kanji,t_member.personal_name_kanji)as name,v_section_of_company.section_nm,t_message.message,t_message.file_url,t_message.sended_at
+    FROM t_message,t_ngmessage,v_section_of_company,t_member,m_sns_user
+	 WHERE t_message.pk = t_ngmessage.message_pk
+	 AND m_sns_user.account_id = t_message.chatwork_id
+	 AND t_member.email = m_sns_user.account_mail
+	 AND t_member.section_id = v_section_of_company.section_id
+	 AND t_member.company_id = v_section_of_company.company_id
+	 AND v_section_of_company.section_nm = #{sectionNm}
+	 AND v_section_of_company.company_nm = #{companyNm}
+	 AND t_ngmessage.ng_pk = #{ngPk}
+  </select>
+
+  <!--ng检索 全社-->
+  <select id="retrievalNgWords" resultMap="BaseResultMap">
+     SELECT t_message.pk,concat(t_member.family_name_kanji,t_member.personal_name_kanji)AS name,
+      concat(v_section_of_company.company_nm,' * ',v_section_of_company.section_nm)AS names,t_message.message,t_message.file_url,t_message.sended_at
+   FROM t_ngmessage,t_message,v_section_of_company,t_member,m_sns_user
+	 WHERE t_ngmessage.message_pk = t_message.pk
+	 AND t_message.chatwork_id = m_sns_user.account_id
+	 AND m_sns_user.account_mail = t_member.email
+	 AND t_member.section_id = v_section_of_company.section_id
+	 AND t_member.company_id = v_section_of_company.company_id
+	 AND t_ngmessage.ng_pk = #{ngPk}
+  </select>
+</mapper>

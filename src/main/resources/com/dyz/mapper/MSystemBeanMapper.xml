@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.MSystemBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.dyz.entity.MSystemBean" >
+    <result column="pk" property="pk" jdbcType="INTEGER" />
+    <result column="item_key" property="itemKey" jdbcType="VARCHAR" />
+    <result column="item_value" property="itemValue" jdbcType="VARCHAR" />
+    <result column="item_remark" property="itemRemark" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_by" property="deletedBy" jdbcType="VARCHAR" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+    <result column="exclusion_version" property="exclusionVersion" jdbcType="INTEGER" />
+    <result column="del_flg" property="delFlg" jdbcType="BIT" />
+  </resultMap>
+  <insert id="insert" parameterType="com.dyz.entity.MSystemBean" >
+    insert into m_system (pk, item_key, item_value, 
+      item_remark, created_by, created_at, 
+      updated_by, updated_at, deleted_by, 
+      deleted_at, exclusion_version, del_flg
+      )
+    values (#{pk,jdbcType=INTEGER}, #{itemKey,jdbcType=VARCHAR}, #{itemValue,jdbcType=VARCHAR}, 
+      #{itemRemark,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedBy,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, #{deletedBy,jdbcType=VARCHAR}, 
+      #{deletedAt,jdbcType=TIMESTAMP}, #{exclusionVersion,jdbcType=INTEGER}, #{delFlg,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dyz.entity.MSystemBean" >
+    insert into m_system
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pk != null" >
+        pk,
+      </if>
+      <if test="itemKey != null" >
+        item_key,
+      </if>
+      <if test="itemValue != null" >
+        item_value,
+      </if>
+      <if test="itemRemark != null" >
+        item_remark,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedBy != null" >
+        updated_by,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="deletedBy != null" >
+        deleted_by,
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at,
+      </if>
+      <if test="exclusionVersion != null" >
+        exclusion_version,
+      </if>
+      <if test="delFlg != null" >
+        del_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pk != null" >
+        #{pk,jdbcType=INTEGER},
+      </if>
+      <if test="itemKey != null" >
+        #{itemKey,jdbcType=VARCHAR},
+      </if>
+      <if test="itemValue != null" >
+        #{itemValue,jdbcType=VARCHAR},
+      </if>
+      <if test="itemRemark != null" >
+        #{itemRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedBy != null" >
+        #{deletedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null" >
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exclusionVersion != null" >
+        #{exclusionVersion,jdbcType=INTEGER},
+      </if>
+      <if test="delFlg != null" >
+        #{delFlg,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

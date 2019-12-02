@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyz.dao.TmemberBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.dyz.entity.TmemberBean" >
+    <id column="pk" property="pk" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="personnel_id" property="personnelId" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="section_id" property="sectionId" jdbcType="VARCHAR" />
+    <result column="position_id" property="positionId" jdbcType="VARCHAR" />
+    <result column="family_name_kanji" property="familyNameKanji" jdbcType="VARCHAR" />
+    <result column="personal_name_kanji" property="personalNameKanji" jdbcType="VARCHAR" />
+    <result column="attention_flg" property="attentionFlg" jdbcType="BIT" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_by" property="deletedBy" jdbcType="VARCHAR" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+    <result column="exclusion_version" property="exclusionVersion" jdbcType="INTEGER" />
+    <result column="del_flg" property="delFlg" jdbcType="BIT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <collection property="tUserBean" ofType="com.dyz.entity.TUserBean">
+        <result column="account" property="account" jdbcType="VARCHAR"></result>
+        <result column="email" property="email" jdbcType="VARCHAR"></result>
+    </collection>
+
+    <collection property="mSectionBean" ofType="com.dyz.entity.MSectionBean">
+      <id column="section_id" property="sectionId" jdbcType="VARCHAR" />
+      <result column="section_nm" property="sectionNm" jdbcType="VARCHAR" />
+    </collection>
+
+    <collection property="mCompanyBean" ofType="com.dyz.entity.MCompanyBean">
+      <id column="company_id" property="companyId" jdbcType="VARCHAR" />
+      <result column="company_nm" property="companyNm" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk, email, personnel_id, company_id, section_id, position_id, family_name_kanji, 
+    personal_name_kanji, attention_flg, created_by, created_at, updated_by, updated_at, 
+    deleted_by, deleted_at, exclusion_version, del_flg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_member
+    where pk = #{pk,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_member
+    where pk = #{pk,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dyz.entity.TmemberBean" >
+    insert into t_member (pk, email, personnel_id, 
+      company_id, section_id, position_id, 
+      family_name_kanji, personal_name_kanji, attention_flg, 
+      created_by, created_at, updated_by, 
+      updated_at, deleted_by, deleted_at, 
+      exclusion_version, del_flg)
+    values (#{pk,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{personnelId,jdbcType=VARCHAR}, 
+      #{companyId,jdbcType=VARCHAR}, #{sectionId,jdbcType=VARCHAR}, #{positionId,jdbcType=VARCHAR}, 
+      #{familyNameKanji,jdbcType=VARCHAR}, #{personalNameKanji,jdbcType=VARCHAR}, #{attentionFlg,jdbcType=BIT}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{deletedBy,jdbcType=VARCHAR}, #{deletedAt,jdbcType=TIMESTAMP}, 
+      #{exclusionVersion,jdbcType=INTEGER}, #{delFlg,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dyz.entity.TmemberBean" >
+    insert into t_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pk != null" >
+        pk,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="personnelId != null" >
+        personnel_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="sectionId != null" >
+        section_id,
+      </if>
+      <if test="positionId != null" >
+        position_id,
+      </if>
+      <if test="familyNameKanji != null" >
+        family_name_kanji,
+      </if>
+      <if test="personalNameKanji != null" >
+        personal_name_kanji,
+      </if>
+      <if test="attentionFlg != null" >
+        attention_flg,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedBy != null" >
+        updated_by,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="deletedBy != null" >
+        deleted_by,
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at,
+      </if>
+      <if test="exclusionVersion != null" >
+        exclusion_version,
+      </if>
+      <if test="delFlg != null" >
+        del_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pk != null" >
+        #{pk,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="personnelId != null" >
+        #{personnelId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionId != null" >
+        #{sectionId,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="familyNameKanji != null" >
+        #{familyNameKanji,jdbcType=VARCHAR},
+      </if>
+      <if test="personalNameKanji != null" >
+        #{personalNameKanji,jdbcType=VARCHAR},
+      </if>
+      <if test="attentionFlg != null" >
+        #{attentionFlg,jdbcType=BIT},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedBy != null" >
+        #{deletedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null" >
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exclusionVersion != null" >
+        #{exclusionVersion,jdbcType=INTEGER},
+      </if>
+      <if test="delFlg != null" >
+        #{delFlg,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dyz.entity.TmemberBean" >
+    update t_member
+    <set >
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="personnelId != null" >
+        personnel_id = #{personnelId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionId != null" >
+        section_id = #{sectionId,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        position_id = #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="familyNameKanji != null" >
+        family_name_kanji = #{familyNameKanji,jdbcType=VARCHAR},
+      </if>
+      <if test="personalNameKanji != null" >
+        personal_name_kanji = #{personalNameKanji,jdbcType=VARCHAR},
+      </if>
+      <if test="attentionFlg != null" >
+        attention_flg = #{attentionFlg,jdbcType=BIT},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedBy != null" >
+        deleted_by = #{deletedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exclusionVersion != null" >
+        exclusion_version = #{exclusionVersion,jdbcType=INTEGER},
+      </if>
+      <if test="delFlg != null" >
+        del_flg = #{delFlg,jdbcType=BIT},
+      </if>
+    </set>
+    where pk = #{pk,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dyz.entity.TmemberBean" >
+    update t_member
+    set email = #{email,jdbcType=VARCHAR},
+      personnel_id = #{personnelId,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      section_id = #{sectionId,jdbcType=VARCHAR},
+      position_id = #{positionId,jdbcType=VARCHAR},
+      family_name_kanji = #{familyNameKanji,jdbcType=VARCHAR},
+      personal_name_kanji = #{personalNameKanji,jdbcType=VARCHAR},
+      attention_flg = #{attentionFlg,jdbcType=BIT},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_by = #{deletedBy,jdbcType=VARCHAR},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      exclusion_version = #{exclusionVersion,jdbcType=INTEGER},
+      del_flg = #{delFlg,jdbcType=BIT}
+    where pk = #{pk,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectBysection" resultMap="BaseResultMap">
+     SELECT  t_member.section_id FROM t_member WHERE t_member.email IN (
+	    SELECT email FROM t_user WHERE account = #{account}
+       );
+  </select>
+
+  <select id="selectBysectionNm" resultMap="BaseResultMap">
+    SELECT m_section.section_nm,m_company.company_nm FROM t_member,t_user,m_section,m_company
+    WHERE t_member.email = t_user.email
+    AND t_member.section_id = m_section.section_id
+    AND t_member.company_id = m_company.company_id
+    AND t_user.account = #{account};
+  </select>
+</mapper>
